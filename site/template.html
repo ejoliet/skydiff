@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>skydiff</title>
+<link rel="stylesheet" href="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.css">
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+         background: #0d1117; color: #c9d1d9; }
+  header { padding: 12px 16px; border-bottom: 1px solid #21262d; }
+  header h1 { margin: 0; font-size: 16px; font-weight: 600; }
+  header .meta { color: #8b949e; font-size: 12px; }
+  #aladin-lite-div { width: 100%; height: 62vh; }
+  #legend { padding: 8px 16px; color: #8b949e; font-size: 12px; }
+  .plus { color: #3fb950; } .tilde { color: #d29922; }
+  ul#difflist { list-style: none; margin: 0; padding: 8px 16px 24px; }
+  ul#difflist li { padding: 2px 0; cursor: pointer; }
+  ul#difflist li:hover { background: #161b22; }
+</style>
+</head>
+<body>
+<header>
+  <h1>skydiff</h1>
+  <div class="meta" id="meta"></div>
+</header>
+<div id="aladin-lite-div"></div>
+<div id="legend"><span class="plus">●</span> addition &nbsp; <span class="tilde">●</span> magnitude change — click a marker or a row</div>
+<ul id="difflist"></ul>
+
+<script id="skydiff-data" type="application/json">
+{"date": "", "source": "", "baseline": false, "additions": [], "modifications": []}
+</script>
+
+<script src="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
+<script>
+const diff = JSON.parse(document.getElementById('skydiff-data').textContent);
+document.getElementById('meta').textContent =
+  `${diff.date} · source: ${diff.source}` + (diff.baseline ? ' · (baseline)' : '');
+
+A.init.then(() => {
+  const aladin = A.aladin('#aladin-lite-div', {
+    survey: 'P/DSS2/color', fov: 180, projection: 'AIT',
+    cooFrame: 'ICRSd', showFullscreenControl: true,
+  });
+
+  const popup = (o, kind) => {
+    const d = o.data;
+    let html = `<b>${d.object_id}</b><br>${kind}<br>P=${d.prob.toFixed(2)}`;
+    if (d.mag != null) html += `, g=${d.mag.toFixed(1)}`;
+    if (d.mag_prev != null) html += ` (was ${d.mag_prev.toFixed(1)})`;
+    return html;
+  };
+
+  const catAdd = A.catalog({name: 'additions', color: '#3fb950', sourceSize: 14, shape: 'plus'});
+  const catMod = A.catalog({name: 'mag changes', color: '#d29922', sourceSize: 14, shape: 'triangle'});
+  aladin.addCatalog(catAdd);
+  aladin.addCatalog(catMod);
+
+  for (const a of diff.additions) {
+    catAdd.addSources([A.marker(a.ra, a.dec, {popupTitle: a.object_id,
+      popupDesc: `addition · ${a.object_class} · P=${a.prob.toFixed(2)}` +
+                 (a.mag != null ? ` · g=${a.mag.toFixed(1)}` : '')})]);
+  }
+  for (const m of diff.modifications) {
+    catMod.addSources([A.marker(m.ra, m.dec, {popupTitle: m.object_id,
+      popupDesc: `Δmag=${m.delta.toFixed(2)} · g=${m.mag.toFixed(1)} (was ${m.mag_prev.toFixed(1)})`})]);
+  }
+
+  const list = document.getElementById('difflist');
+  const row = (sym, cls, o, text) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="${cls}">${sym}</span> ${o.object_id}  ${text}`;
+    li.onclick = () => { aladin.gotoRaDec(o.ra, o.dec); aladin.setFov(1); };
+    list.appendChild(li);
+  };
+  for (const a of diff.additions)
+    row('+', 'plus', a, `new ${a.object_class} candidate (P=${a.prob.toFixed(2)}` +
+        (a.mag != null ? `, g=${a.mag.toFixed(1)}` : '') + ')');
+  for (const m of diff.modifications)
+    row('~', 'tilde', m, `${m.delta < 0 ? 'brightened' : 'faded'} ` +
+        `${Math.abs(m.delta).toFixed(1)} mag (g=${m.mag.toFixed(1)})`);
+});
+</script>
+</body>
+</html>

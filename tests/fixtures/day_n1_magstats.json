@@ -1,0 +1,107 @@
+{
+ "ZTF26aaimazo": [
+  {
+   "fid": 2,
+   "stellar": false,
+   "corrected": true,
+   "ndet": 1,
+   "ndubious": 0,
+   "magmean": 20.514091,
+   "magmedian": 20.514091,
+   "magmax": 20.514091,
+   "magmin": 20.514091,
+   "magsigma": 0.0,
+   "maglast": 20.514091,
+   "magfirst": 20.514091,
+   "firstmjd": 61265.48,
+   "lastmjd": 61265.48,
+   "step_id_corr": "27.6.0"
+  }
+ ],
+ "ZTF26abnvmad": [
+  {
+   "fid": 2,
+   "stellar": false,
+   "corrected": false,
+   "ndet": 1,
+   "ndubious": 0,
+   "magmean": 19.880127,
+   "magmedian": 19.880127,
+   "magmax": 19.880127,
+   "magmin": 19.880127,
+   "magsigma": 0.0,
+   "maglast": 19.880127,
+   "magfirst": 19.880127,
+   "firstmjd": 61265.496,
+   "lastmjd": 61265.496,
+   "step_id_corr": "27.6.0"
+  }
+ ],
+ "ZTF20acpsrpn": [
+  {
+   "fid": 2,
+   "stellar": false,
+   "corrected": true,
+   "ndet": 1,
+   "ndubious": 0,
+   "magmean": 20.295952,
+   "magmedian": 20.295952,
+   "magmax": 20.295952,
+   "magmin": 20.295952,
+   "magsigma": 0.0,
+   "maglast": 20.295952,
+   "magfirst": 20.295952,
+   "firstmjd": 61265.48,
+   "lastmjd": 61265.48,
+   "step_id_corr": "27.6.0"
+  }
+ ],
+ "ZTF26abnvfzc": [
+  {
+   "fid": 2,
+   "stellar": false,
+   "corrected": false,
+   "ndet": 1,
+   "ndubious": 0,
+   "magmean": 20.102222,
+   "magmedian": 20.102222,
+   "magmax": 20.102222,
+   "magmin": 20.102222,
+   "magsigma": 0.0,
+   "maglast": 20.102222,
+   "magfirst": 20.102222,
+   "firstmjd": 61265.484,
+   "lastmjd": 61265.484,
+   "step_id_corr": "27.6.0"
+  }
+ ],
+ "ZTF26abnuyoi": [
+  {
+   "fid": 2,
+   "stellar": false,
+   "corrected": false,
+   "ndet": 1,
+   "ndubious": 0,
+   "magmean": 18.01966,
+   "magmedian": 18.01966,
+   "magmax": 18.01966,
+   "magmin": 18.01966,
+   "magsigma": 0.0,
+   "maglast": 17.51966,
+   "magfirst": 18.01966,
+   "firstmjd": 61265.477,
+   "lastmjd": 61265.477,
+   "step_id_corr": "27.6.0"
+  }
+ ],
+ "ZTF26zznewsn": [
+  {
+   "fid": 1,
+   "maglast": 18.4,
+   "magfirst": 18.4,
+   "firstmjd": 61266.25,
+   "lastmjd": 61266.25,
+   "ndet": 1
+  }
+ ]
+}

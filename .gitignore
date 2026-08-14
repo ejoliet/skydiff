@@ -5,3 +5,7 @@ __pycache__/
 .venv/
 .pytest_cache/
 .ruff_cache/
+
+# AgentOps session artifacts
+/.agents/
+/.serena/
